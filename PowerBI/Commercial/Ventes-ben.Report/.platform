@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ventes-ben"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "10534ddb-adf7-4b04-9d01-a9986075a867"
+  }
+}
