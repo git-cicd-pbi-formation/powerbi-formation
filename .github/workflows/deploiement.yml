@@ -1,0 +1,84 @@
+# Déploiement automatique vers la production
+# ---------------------------------------------------------------------------
+# Quand une pull request est fusionnée dans main et qu'elle touche PowerBI/,
+# ce workflow appelle, par API et avec le service principal, le deployment
+# pipeline Power BI associé au dossier de workspace modifié
+# (voir .github/config/Mapping_repo_deploymentPipeline.json).
+# Il déploie tout le contenu de l'étape Dev vers l'étape Prod.
+#
+# Désactivé tant que la variable de dépôt CD_ACTIF ne vaut pas "true".
+# Secrets à créer : AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET.
+# Équivalent Azure DevOps chez le client : YAML/PBI-DEPLOY-MASTER.yml
+# ---------------------------------------------------------------------------
+name: deploiement
+
+on:
+  push:
+    branches: [main]
+    paths: ['PowerBI/**']
+  workflow_dispatch:
+
+jobs:
+  deploiement:
+    name: deploiement
+    if: vars.CD_ACTIF == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Identifier les dossiers de workspace à déployer
+        id: dossiers
+        env:
+          AVANT: ${{ github.event.before }}
+          APRES: ${{ github.sha }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || ! git cat-file -e "$AVANT^{commit}" 2>/dev/null; then
+            dossiers=$(ls -d PowerBI/*/ 2>/dev/null | cut -d/ -f2 | sort -u)
+          else
+            dossiers=$(git diff --name-only "$AVANT" "$APRES" -- PowerBI | cut -d/ -f2 | sort -u)
+          fi
+          echo "Dossiers concernés : $dossiers"
+          echo "liste=$(echo $dossiers)" >> "$GITHUB_OUTPUT"
+
+      - name: Obtenir un jeton pour le service principal
+        id: jeton
+        env:
+          TENANT: ${{ secrets.AZURE_TENANT_ID }}
+          CLIENT: ${{ secrets.AZURE_CLIENT_ID }}
+          SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          jeton=$(curl -sf -X POST "https://login.microsoftonline.com/$TENANT/oauth2/v2.0/token" \
+            -d grant_type=client_credentials -d client_id="$CLIENT" --data-urlencode client_secret="$SECRET" \
+            -d scope=https://analysis.windows.net/powerbi/api/.default | jq -r .access_token)
+          [ -n "$jeton" ] && [ "$jeton" != "null" ] || { echo "::error::Impossible d'obtenir un jeton : vérifier les trois secrets AZURE_*."; exit 1; }
+          echo "::add-mask::$jeton"
+          echo "valeur=$jeton" >> "$GITHUB_OUTPUT"
+
+      - name: Appeler le deployment pipeline
+        env:
+          JETON: ${{ steps.jeton.outputs.valeur }}
+          DOSSIERS: ${{ steps.dossiers.outputs.liste }}
+        run: |
+          api=https://api.powerbi.com/v1.0/myorg
+          pipelines=$(curl -sf -H "Authorization: Bearer $JETON" "$api/pipelines")
+          for dossier in $DOSSIERS; do
+            nom=$(jq -r --arg d "$dossier" '.[$d] // empty' .github/config/Mapping_repo_deploymentPipeline.json)
+            if [ -z "$nom" ]; then echo "::warning::Aucun deployment pipeline associé au dossier $dossier dans le fichier de mapping."; continue; fi
+            id=$(echo "$pipelines" | jq -r --arg n "$nom" '.value[] | select(.displayName == $n) | .id')
+            if [ -z "$id" ]; then echo "::error::Deployment pipeline « $nom » introuvable : le service principal en est-il administrateur ?"; exit 1; fi
+            echo "Déploiement de $dossier via « $nom » ($id)"
+            op=$(curl -sf -X POST -H "Authorization: Bearer $JETON" -H "Content-Type: application/json" \
+              "$api/pipelines/$id/deployAll" \
+              -d '{"sourceStageOrder":0,"options":{"allowCreateArtifact":true,"allowOverwriteArtifact":true},"note":"Déploiement automatique depuis GitHub Actions"}' | jq -r .id)
+            for i in $(seq 1 60); do
+              sleep 10
+              statut=$(curl -sf -H "Authorization: Bearer $JETON" "$api/pipelines/$id/operations/$op" | jq -r .status)
+              echo "  statut : $statut"
+              case "$statut" in
+                Succeeded) echo "Déploiement réussi."; break ;;
+                Failed) echo "::error::Le déploiement a échoué : voir l'historique du deployment pipeline dans Power BI."; exit 1 ;;
+              esac
+            done
+          done

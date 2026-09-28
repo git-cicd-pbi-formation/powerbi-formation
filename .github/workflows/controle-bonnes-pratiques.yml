@@ -1,0 +1,124 @@
+# Contrôle automatique des bonnes pratiques Power BI
+# ---------------------------------------------------------------------------
+# Se déclenche sur chaque pull request vers dev ou main, et ne vérifie que ce
+# que la PR modifie :
+#   - les modèles sémantiques (dossiers *.SemanticModel, format TMDL) avec le
+#     Best Practice Analyzer de Tabular Editor 2 ;
+#   - les rapports (dossiers *.Report, format legacy report.json) avec
+#     PBI Inspector.
+# Règles : .github/regles/BPARules.json et .github/regles/PBI-Inspector-rules.json
+#   Tabular Editor : sévérité 1 = information, 2 = avertissement, 3+ = bloquant
+#   PBI Inspector  : logType "warning" = avertissement, "error" = bloquant
+# Équivalent Azure DevOps chez le client : YAML/PBI-BUILD-MASTER.yml
+# ---------------------------------------------------------------------------
+name: controle-bonnes-pratiques
+
+on:
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  controle-bonnes-pratiques:
+    name: controle-bonnes-pratiques
+    runs-on: windows-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lister les objets modifiés par la pull request
+        id: objets
+        shell: pwsh
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          $fichiers = git diff --name-only "$env:BASE...$env:HEAD" | Where-Object { $_ -like 'PowerBI/*' }
+          $modeles  = @($fichiers | Where-Object { $_ -match '^(PowerBI/.+?\.SemanticModel)/' } | ForEach-Object { $Matches[1] } | Sort-Object -Unique)
+          $rapports = @($fichiers | Where-Object { $_ -match '^(PowerBI/.+?\.Report)/' }        | ForEach-Object { $Matches[1] } | Sort-Object -Unique)
+          # un dossier supprimé par la PR n'est plus à contrôler
+          $modeles  = @($modeles  | Where-Object { Test-Path "$_/definition" })
+          $rapports = @($rapports | Where-Object { Test-Path "$_/definition.pbir" })
+          Write-Host "Modèles modifiés  : $($modeles.Count)";  $modeles  | ForEach-Object { Write-Host "  - $_" }
+          Write-Host "Rapports modifiés : $($rapports.Count)"; $rapports | ForEach-Object { Write-Host "  - $_" }
+          "modeles=$($modeles -join ';')"   | Out-File -Append $env:GITHUB_OUTPUT -Encoding utf8
+          "rapports=$($rapports -join ';')" | Out-File -Append $env:GITHUB_OUTPUT -Encoding utf8
+
+      - name: Télécharger Tabular Editor 2 et PBI Inspector
+        if: steps.objets.outputs.modeles != '' || steps.objets.outputs.rapports != ''
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path _outils | Out-Null
+          Invoke-WebRequest "https://github.com/TabularEditor/TabularEditor/releases/latest/download/TabularEditor.Portable.zip" -OutFile _outils/te.zip
+          Expand-Archive _outils/te.zip -DestinationPath _outils/TE -Force
+          Invoke-WebRequest "https://github.com/NatVanG/PBI-Inspector/releases/latest/download/win-x64-CLI.zip" -OutFile _outils/pbii.zip
+          Expand-Archive _outils/pbii.zip -DestinationPath _outils/PBII -Force
+
+      - name: Modèles sémantiques — Best Practice Analyzer
+        id: bpa
+        if: steps.objets.outputs.modeles != ''
+        shell: pwsh
+        env:
+          MODELES: ${{ steps.objets.outputs.modeles }}
+        run: |
+          $te = (Resolve-Path "_outils/TE/TabularEditor.exe").Path
+          $regles = (Resolve-Path ".github/regles/BPARules.json").Path
+          $bloquant = $false
+          foreach ($modele in $env:MODELES.Split(';')) {
+            Write-Host "::group::Best Practice Analyzer — $modele"
+            $def = (Resolve-Path "$modele/definition").Path
+            $sortie = New-TemporaryFile
+            $p = Start-Process -FilePath $te -ArgumentList "`"$def`" -A `"$regles`" -G" `
+                   -NoNewWindow -Wait -PassThru -RedirectStandardOutput $sortie.FullName
+            $lignes = Get-Content $sortie.FullName
+            $lignes | ForEach-Object { Write-Host $_ }
+            Write-Host "::endgroup::"
+            # -G écrit déjà au format GitHub (::warning / ::error) : on les ré-émet hors du groupe pour les annotations
+            $lignes | Where-Object { $_ -match '^::(warning|error)' } | ForEach-Object { Write-Host $_ }
+            if ($p.ExitCode -ne 0 -or ($lignes -match '^::error')) { $bloquant = $true }
+          }
+          if ($bloquant) {
+            Write-Host "::error::Au moins une règle bloquante (sévérité 3 ou plus) remonte sur un modèle : la pull request ne peut pas être fusionnée en l'état."
+            exit 1
+          }
+          Write-Host "Aucune règle bloquante sur les modèles."
+
+      - name: Rapports — PBI Inspector
+        id: inspector
+        if: always() && steps.objets.outputs.rapports != ''
+        shell: pwsh
+        env:
+          RAPPORTS: ${{ steps.objets.outputs.rapports }}
+        run: |
+          $exe = Get-ChildItem _outils/PBII -Recurse -Filter PBIXInspectorCLI.exe | Select-Object -First 1
+          $regles = (Resolve-Path ".github/regles/PBI-Inspector-rules.json").Path
+          $bloquant = $false
+          foreach ($rapport in $env:RAPPORTS.Split(';')) {
+            Write-Host "::group::PBI Inspector — $rapport"
+            $chemin = (Resolve-Path $rapport).Path
+            $sortie = New-TemporaryFile
+            $p = Start-Process -FilePath $exe.FullName -ArgumentList "-pbipreport `"$chemin`" -rules `"$regles`" -formats `"ADO`"" `
+                   -NoNewWindow -Wait -PassThru -RedirectStandardOutput $sortie.FullName
+            $lignes = Get-Content $sortie.FullName
+            $lignes | ForEach-Object { Write-Host $_ }
+            Write-Host "::endgroup::"
+            # PBI Inspector parle le format Azure DevOps : on traduit en annotations GitHub
+            foreach ($l in $lignes) {
+              if ($l -match '##vso\[task\.logissue type=(warning|error)[^\]]*\](.*)') {
+                Write-Host "::$($Matches[1])::[$rapport] $($Matches[2])"
+                if ($Matches[1] -eq 'error') { $bloquant = $true }
+              }
+            }
+          }
+          if ($bloquant) {
+            Write-Host "::error::Au moins une règle bloquante remonte sur un rapport."
+            exit 1
+          }
+          Write-Host "Aucune règle bloquante sur les rapports."
+
+      - name: Rien à contrôler
+        if: steps.objets.outputs.modeles == '' && steps.objets.outputs.rapports == ''
+        shell: pwsh
+        run: |
+          Write-Host "Cette pull request ne modifie aucun modèle ni aucun rapport sous PowerBI/ : contrôle réussi."

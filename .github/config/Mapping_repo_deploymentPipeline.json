@@ -1,0 +1,4 @@
+{
+  "_commentaire": "Associe chaque dossier de workspace (PowerBI/<dossier>) au deployment pipeline Power BI qui le déploie. La valeur est le nom exact du deployment pipeline.",
+  "Commercial": "Formation CICD - Commercial"
+}

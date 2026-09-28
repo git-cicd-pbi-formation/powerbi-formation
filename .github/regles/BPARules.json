@@ -1,0 +1,62 @@
+[
+  {
+    "ID": "FORMAT_MESURE",
+    "Name": "[Formatage] Une mesure visible doit avoir une chaîne de format",
+    "Category": "Formatage",
+    "Description": "Sans format, la mesure s'affiche différemment selon les visuels. Choisir un format dans Power BI Desktop (Outils de mesure → Format). Règle BLOQUANTE pendant la formation.",
+    "Severity": 3,
+    "Scope": "Measure",
+    "Expression": "not IsHidden and string.IsNullOrWhitespace(FormatString)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CLE_ETRANGERE_VISIBLE",
+    "Name": "[Ergonomie] Masquer les clés étrangères",
+    "Category": "Ergonomie",
+    "Description": "Une colonne côté « plusieurs » d'une relation ne doit pas être proposée aux utilisateurs : on filtre par la table de dimension.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn",
+    "Expression": "UsedInRelationships.Any(FromColumn.Name == current.Name and FromTable.Name == current.Table.Name and FromCardinality == \"Many\") and not IsHidden",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DATE_AUTO",
+    "Name": "[Modèle] Pas de tables de dates automatiques",
+    "Category": "Modèle",
+    "Description": "Désactiver Auto date/time dans les options de Power BI Desktop : ces tables cachées alourdissent le modèle.",
+    "Severity": 2,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "Name.StartsWith(\"DateTableTemplate_\") or Name.StartsWith(\"LocalDateTable_\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "VIRGULE_FLOTTANTE",
+    "Name": "[Performance] Pas de nombres à virgule flottante",
+    "Category": "Performance",
+    "Description": "Préférer le type Nombre décimal fixe (Currency) ou Nombre entier : le type flottant provoque des arrondis inattendus.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "DataType = \"Double\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DIVIDE",
+    "Name": "[DAX] Utiliser DIVIDE plutôt que l'opérateur /",
+    "Category": "DAX",
+    "Description": "DIVIDE gère la division par zéro sans erreur.",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn",
+    "Expression": "RegEx.IsMatch(Expression,\"\\]\\s*\\/(?!\\/)(?!\\*)\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DESCRIPTION_MESURE",
+    "Name": "[Documentation] Décrire les mesures visibles",
+    "Category": "Documentation",
+    "Description": "La description apparaît en info-bulle dans le volet Données.",
+    "Severity": 1,
+    "Scope": "Measure",
+    "Expression": "not IsHidden and string.IsNullOrWhitespace(Description)",
+    "CompatibilityLevel": 1200
+  }
+]
