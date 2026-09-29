@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "4e6750b0c696e5205e7a",
+  "name": "7024eabf76603b67de08",
   "position": {
-    "x": 815.96554199569277,
-    "y": 610.59583632447959,
-    "z": 2,
-    "height": 468.62885857860738,
-    "width": 1102.6561378320173,
-    "tabOrder": 2
+    "x": 1219.6920574481064,
+    "y": 22.713073695495464,
+    "z": 3,
+    "height": 556.47030553963884,
+    "width": 676.84959612576483,
+    "tabOrder": 3
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "barChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Calendrier"
+                      "Entity": "Produits"
                     }
                   },
-                  "Property": "Mois"
+                  "Property": "Categorie"
                 }
               },
-              "queryRef": "Calendrier.Mois",
-              "nativeQueryRef": "Mois",
+              "queryRef": "Produits.Categorie",
+              "nativeQueryRef": "Categorie",
               "active": true
             }
           ]
@@ -71,7 +71,7 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "valueAxis": [
         {
           "properties": {
             "fontSize": {
@@ -84,7 +84,7 @@
           }
         }
       ],
-      "valueAxis": [
+      "categoryAxis": [
         {
           "properties": {
             "fontSize": {
@@ -103,7 +103,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "bedf7f7960e2493aeb18",
+        "name": "ddaeeb53eb820b0dc30d",
         "field": {
           "Measure": {
             "Expression": {
@@ -117,15 +117,15 @@
         "type": "Advanced"
       },
       {
-        "name": "e988dc74b046e08d0d7d",
+        "name": "f2b7acd958ce244c035a",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Calendrier"
+                "Entity": "Produits"
               }
             },
-            "Property": "Mois"
+            "Property": "Categorie"
           }
         },
         "type": "Categorical"
