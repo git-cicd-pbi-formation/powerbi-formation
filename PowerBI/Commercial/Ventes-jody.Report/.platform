@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ventes-jody"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "39108ff5-683d-4718-828d-6e63b609da4b"
+  }
+}
