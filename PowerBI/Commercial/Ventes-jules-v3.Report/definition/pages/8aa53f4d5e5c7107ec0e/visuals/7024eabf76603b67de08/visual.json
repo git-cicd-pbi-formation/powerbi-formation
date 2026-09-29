@@ -10,7 +10,7 @@
     "tabOrder": 3
   },
   "visual": {
-    "visualType": "barChart",
+    "visualType": "pieChart",
     "query": {
       "queryState": {
         "Category": {
@@ -70,66 +70,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {
-      "valueAxis": [
-        {
-          "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "13D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "categoryAxis": [
-        {
-          "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "13D"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ddaeeb53eb820b0dc30d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Ventes"
-              }
-            },
-            "Property": "CA HT"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f2b7acd958ce244c035a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Produits"
-              }
-            },
-            "Property": "Categorie"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }
