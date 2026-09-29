@@ -22,10 +22,9 @@ table Ventes
 			Ventes[Statut] <> "Annulée" 
 			,Calendrier[Mois] = FORMAT(EDATE(TODAY(), -1), "yyyy-MM"))
 			```
-		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
 		lineageTag: 2db1b4d3-b2fc-4ae6-8010-abb979181c2e
 
-		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column NumCommande
 		dataType: string
