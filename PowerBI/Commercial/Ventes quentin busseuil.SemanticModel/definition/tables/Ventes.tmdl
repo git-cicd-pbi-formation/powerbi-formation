@@ -17,6 +17,16 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
+	measure 'CA HT N-1' = ```
+			CALCULATE ( SUM ( Ventes[MontantHT] ), 
+			Ventes[Statut] <> "Annulée" 
+			,Calendrier[Mois] = FORMAT(EDATE(TODAY(), -1), "yyyy-MM"))
+			```
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: 2db1b4d3-b2fc-4ae6-8010-abb979181c2e
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
