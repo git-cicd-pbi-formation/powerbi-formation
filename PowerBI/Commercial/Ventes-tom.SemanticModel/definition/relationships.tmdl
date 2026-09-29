@@ -1,0 +1,8 @@
+relationship AutoDetected_9f3cd128-55d7-4b69-9c8f-469ec4304141
+	fromColumn: Ventes.ProduitId
+	toColumn: Produits.ProduitId
+
+relationship b5356684-6e6b-3860-8870-32f790b9375a
+	fromColumn: Ventes.DateCommande
+	toColumn: Calendrier.Date
+
