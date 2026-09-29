@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ventes-celine"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6fc9ad39-c1bb-4cc4-9e06-51261b803568"
+  }
+}
