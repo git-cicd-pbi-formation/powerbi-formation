@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Ventes-celine"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a88e8fa8-04a1-47ff-965a-0a173f6e390c"
+  }
+}
