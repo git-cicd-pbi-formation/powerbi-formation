@@ -21,6 +21,9 @@ table Ventes
 		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
 		lineageTag: 33dd5500-5a53-4dcd-ac84-85b9252f68fa
 
+	measure 'Marge estime' = [CA HT]*0.35
+		lineageTag: 7006f306-de78-4dab-b257-7b148945f7f0
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
