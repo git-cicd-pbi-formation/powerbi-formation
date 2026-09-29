@@ -3,10 +3,10 @@
   "name": "140fa940228ae87cba80",
   "position": {
     "x": 0,
-    "y": 610.981682408828,
+    "y": 610.59583632447959,
     "z": 4,
-    "height": 467.88931812720654,
-    "width": 651.86521506071983,
+    "height": 468.62885857860738,
+    "width": 791.15577889447241,
     "tabOrder": 4
   },
   "visual": {
@@ -56,6 +56,20 @@
               },
               "queryRef": "Ventes.Nb commandes",
               "nativeQueryRef": "Nb commandes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
+                  "Property": "CA HT N-1"
+                }
+              },
+              "queryRef": "Ventes.CA HT N-1",
+              "nativeQueryRef": "CA HT N-1"
             }
           ]
         }
