@@ -1,0 +1,25 @@
+table Ventes
+
+	measure 'CA HT' = SUM(Ventes[MontantHT])
+		formatString: #,0
+
+	measure 'Nb commandes' = DISTINCTCOUNT(Ventes[NumCommande])
+
+	column NumCommande
+		dataType: string
+		summarizeBy: none
+		sourceColumn: NumCommande
+
+	column MontantHT
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: MontantHT
+
+	partition Ventes = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [NumCommande = text, MontantHT = number], {{"C00001", 10}})
+				in
+				    Source
+
