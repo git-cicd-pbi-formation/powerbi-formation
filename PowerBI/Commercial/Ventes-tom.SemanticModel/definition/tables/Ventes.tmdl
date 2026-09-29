@@ -17,6 +17,10 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
+	measure 'CA HT N-1' = CALCULATE ( SUM ( Ventes[MontantHT] ), Ventes[Statut] <> "Annulée" )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 68e88ace-2ccc-44e4-889c-ab73c7926d4f
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
