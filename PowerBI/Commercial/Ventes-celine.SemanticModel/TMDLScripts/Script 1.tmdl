@@ -1,0 +1,7 @@
+createOrReplace
+
+	ref table Ventes
+
+		measure 'Marge estimée' = [CA HT]*0.35
+			lineageTag: 0de8d7bb-5cee-427e-990d-d6f848f3e855
+
