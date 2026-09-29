@@ -17,20 +17,6 @@
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Ventes"
-                    }
-                  },
-                  "Property": "Region"
-                }
-              },
-              "queryRef": "Ventes.Region",
-              "nativeQueryRef": "Region"
-            },
-            {
-              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
@@ -51,6 +37,20 @@
                       "Entity": "Ventes"
                     }
                   },
+                  "Property": "CA HT N-1"
+                }
+              },
+              "queryRef": "Ventes.CA HT N-1",
+              "nativeQueryRef": "CA HT N-1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Ventes"
+                    }
+                  },
                   "Property": "Nb commandes"
                 }
               },
@@ -59,23 +59,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Ventes"
-                  }
-                },
-                "Property": "Nb commandes"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
