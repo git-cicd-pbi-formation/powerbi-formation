@@ -2,6 +2,12 @@ table Calendrier
 	lineageTag: cb285788-30f5-47fe-886b-f0891d8c682b
 	dataCategory: Time
 
+	measure 'Marge estimée' = [CA HT] * 0.35
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: 708214a0-9eab-4087-a7df-94a8f0c5082c
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
 	column Date
 		isKey
 		formatString: General Date
