@@ -10,7 +10,7 @@
     "tabOrder": 3
   },
   "visual": {
-    "visualType": "barChart",
+    "visualType": "stackedAreaChart",
     "query": {
       "queryState": {
         "Category": {
@@ -47,6 +47,25 @@
               },
               "queryRef": "Ventes.CA HT",
               "nativeQueryRef": "CA HT"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Ventes"
+                        }
+                      },
+                      "Property": "Quantite"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Ventes.Quantite)",
+              "nativeQueryRef": "Somme de Quantite"
             }
           ]
         }
@@ -99,37 +118,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ddaeeb53eb820b0dc30d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Ventes"
-              }
-            },
-            "Property": "CA HT"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f2b7acd958ce244c035a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Produits"
-              }
-            },
-            "Property": "Categorie"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }
