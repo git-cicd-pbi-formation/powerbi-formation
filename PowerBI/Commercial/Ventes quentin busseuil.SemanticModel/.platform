@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Ventes quentin busseuil"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "99034f9c-a50c-4070-9920-af2320722cf1"
+  }
+}
