@@ -47,20 +47,6 @@
               },
               "queryRef": "Ventes.CA HT",
               "nativeQueryRef": "CA HT"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Produits"
-                    }
-                  },
-                  "Property": "Total Prix HT"
-                }
-              },
-              "queryRef": "Produits.Total Prix HT",
-              "nativeQueryRef": "Total Prix HT"
             }
           ]
         }
