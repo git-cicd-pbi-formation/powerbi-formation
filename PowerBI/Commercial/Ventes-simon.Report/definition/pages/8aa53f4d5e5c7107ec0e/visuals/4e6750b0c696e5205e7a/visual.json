@@ -55,19 +55,18 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Ventes"
+                    "Entity": "Calendrier"
                   }
                 },
-                "Property": "CA HT"
+                "Property": "Mois"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "objects": {

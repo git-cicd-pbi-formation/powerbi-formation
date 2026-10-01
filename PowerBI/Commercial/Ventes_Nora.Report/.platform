@@ -1,11 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "SemanticModel",
+    "type": "Report",
     "displayName": "Ventes_Nora"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "3da84060-b1d5-41e3-899a-dc1e86936396"
+    "logicalId": "064df786-1e87-424e-b45e-7f4cb5e6d9bd"
   }
 }
+
+
+
+
