@@ -17,11 +17,9 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
-	measure 'CA HT N-1' = CALCULATE ( SUM ( Ventes[MontantHT] ), Ventes[Statut] <> "Annulée" )
-		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
-		lineageTag: 68e88ace-2ccc-44e4-889c-ab73c7926d4f
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	measure 'Nb ventes' = CALCULATE ( DISTINCTCOUNT ( Ventes[NumCommande] ), Ventes[Statut] <> "Annulée" )
+		formatString: 0
+		lineageTag: 3c3e1ec4-7b52-4e5e-89a9-eabc0c883911
 
 	column NumCommande
 		dataType: string
@@ -128,3 +126,4 @@ table Ventes
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+
