@@ -25,6 +25,11 @@ table Ventes
 
 		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
 
+	measure 'Marge estimé' = [CA HT] * 0.35
+		lineageTag: 6396b2b4-5cf1-4e57-b8ca-94bff6e2f0b8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
