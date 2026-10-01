@@ -32,6 +32,11 @@ table Ventes
 		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
 		lineageTag: c2aabfc4-f50b-4b5b-9dc7-575b9acea6d5
 
+	measure Marge = [CA HT]*0.35
+		lineageTag: 864132dc-734b-47ab-b085-63ff8575824e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
