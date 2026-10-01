@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ventes_InesTaibi"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e292db52-7444-4783-8785-09250387e587"
+  }
+}
