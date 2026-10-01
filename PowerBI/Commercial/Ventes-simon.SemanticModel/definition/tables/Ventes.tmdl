@@ -17,6 +17,25 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
+	measure 'CA HT SPLY' = ```
+			
+			CALCULATE ( 
+			    SUM ( Ventes[MontantHT] ), 
+			    Ventes[Statut] <> "Annulée", 
+			    SAMEPERIODLASTYEAR(Calendrier[Date])
+			)
+			```
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 59ec5934-fc2c-4e69-a6a7-f91163a4ca93
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
+	measure 'EVO CA HT VS LY' =
+			
+			([CA HT] - [CA HT SPLY]) / [CA HT SPLY]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: d851550c-2823-49b2-90fd-2a8a394789be
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
