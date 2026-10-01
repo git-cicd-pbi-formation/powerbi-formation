@@ -21,6 +21,10 @@ table Ventes
 		formatString: 0
 		lineageTag: 3c3e1ec4-7b52-4e5e-89a9-eabc0c883911
 
+	measure 'CA HT N-1' = CALCULATE ( SUM ( Ventes[MontantHT] ), Ventes[Statut] <> "Annulée" , year(Calendrier[Année])="2025")
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 811d57c6-c6d4-40f5-b489-d27581ad144b
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
