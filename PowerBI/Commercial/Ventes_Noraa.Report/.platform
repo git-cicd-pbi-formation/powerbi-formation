@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ventes_Nora"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "064df786-1e87-424e-b45e-7f4cb5e6d9bd"
+  }
+}
