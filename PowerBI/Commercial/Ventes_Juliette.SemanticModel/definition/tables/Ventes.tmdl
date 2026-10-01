@@ -17,11 +17,11 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
-	measure 'CA HT N-1' = CALCULATE ( SUM ( Ventes[MontantHT] ), Ventes[Statut] <> "Annulée" )
-		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
-		lineageTag: 68e88ace-2ccc-44e4-889c-ab73c7926d4f
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	measure Texte_Juliette = ```
+			"Bienvenue Juliette sur ton rapport" 
+			```
+		formatString: 0
+		lineageTag: 84ec57fa-c6c9-4f1a-b712-588336477ac4
 
 	column NumCommande
 		dataType: string
@@ -128,3 +128,4 @@ table Ventes
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+
