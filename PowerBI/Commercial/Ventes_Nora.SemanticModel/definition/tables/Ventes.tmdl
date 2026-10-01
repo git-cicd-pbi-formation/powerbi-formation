@@ -19,7 +19,7 @@ table Ventes
 
 	measure 'Nb ventes' = CALCULATE ( DISTINCTCOUNT ( Ventes[NumCommande] ), Ventes[Statut] <> "Annulée" )
 		formatString: 0
-		lineageTag: 3c3e1ec4-7b52-4e5e-89a9-eabc0c883910
+		lineageTag: 3c3e1ec4-7b52-4e5e-89a9-eabc0c883911
 
 	column NumCommande
 		dataType: string
