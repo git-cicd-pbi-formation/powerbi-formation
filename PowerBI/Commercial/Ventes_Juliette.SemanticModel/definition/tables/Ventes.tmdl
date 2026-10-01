@@ -20,6 +20,7 @@ table Ventes
 	measure Texte_Juliette = ```
 			"Bienvenue Juliette sur ton rapport" 
 			```
+		formatString: "ABC"
 		lineageTag: 84ec57fa-c6c9-4f1a-b712-588336477ac4
 
 	column NumCommande
