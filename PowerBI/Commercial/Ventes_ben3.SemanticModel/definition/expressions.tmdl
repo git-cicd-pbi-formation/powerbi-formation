@@ -1,7 +1,0 @@
-expression Environnement = "dev" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 2d9d6858-38d6-47c2-aac6-28ab15fc6cc7
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Text
-
