@@ -1,6 +1,10 @@
 table Produits
 	lineageTag: 4acffc72-8aa7-4ba7-921b-faa2ac95ca1d
 
+	measure Mesuresansformat = 1
+		formatString: 0
+		lineageTag: 1c1fa6c8-4d71-407b-86bb-46b615444e04
+
 	column ProduitId
 		dataType: int64
 		formatString: 0
