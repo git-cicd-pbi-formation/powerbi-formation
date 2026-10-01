@@ -5,7 +5,7 @@ table Ventes
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		lineageTag: 323202a6-b3d4-4137-818b-a47d39778ec5
 
-	measure 'Nb commandes' = CALCULATE ( DISTINCTCOUNT ( Ventes[NumCommande] ), Ventes[Statut] <> "Annulée" )
+	measure 'Nb commande' = CALCULATE ( DISTINCTCOUNT ( Ventes[NumCommande] ), Ventes[Statut] <> "Annulée" )
 		formatString: 0
 		lineageTag: 3c3e1ec4-7b52-4e5e-89a9-eabc0c883910
 
