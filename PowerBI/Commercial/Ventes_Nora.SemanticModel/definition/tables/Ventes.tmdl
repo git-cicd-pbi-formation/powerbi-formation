@@ -17,7 +17,6 @@ table Ventes
 		formatString: 0.0\ %;-0.0\ %;0.0\ %
 		lineageTag: bcce0841-d5f6-4700-831a-71a3477a6c23
 
-
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
