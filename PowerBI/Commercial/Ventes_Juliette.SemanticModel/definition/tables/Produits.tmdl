@@ -1,6 +1,14 @@
 table Produits
 	lineageTag: 4acffc72-8aa7-4ba7-921b-faa2ac95ca1d
 
+	measure 'Total Prix HT' =
+			
+			SUM(Produits[PrixUnitaireHT])
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: babc3123-2b38-4124-89eb-89f0425daed1
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
 	column ProduitId
 		dataType: int64
 		formatString: 0
