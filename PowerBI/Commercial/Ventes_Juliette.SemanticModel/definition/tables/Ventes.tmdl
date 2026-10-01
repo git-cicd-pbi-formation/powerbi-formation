@@ -23,6 +23,15 @@ table Ventes
 		formatString: 0
 		lineageTag: 84ec57fa-c6c9-4f1a-b712-588336477ac4
 
+	measure 'CA HT N-1' =
+			
+			CALCULATE(
+			    [CA HT],
+			    SAMEPERIODLASTYEAR('Calendrier'[Date])
+			)
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: c2aabfc4-f50b-4b5b-9dc7-575b9acea6d5
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
