@@ -39,6 +39,7 @@ table Ventes
 	measure 'Marge estimée' =
 			
 			[CA HT] * 0.35
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		lineageTag: af19814f-9c61-4367-949d-2eb53287b8f9
 
 		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
