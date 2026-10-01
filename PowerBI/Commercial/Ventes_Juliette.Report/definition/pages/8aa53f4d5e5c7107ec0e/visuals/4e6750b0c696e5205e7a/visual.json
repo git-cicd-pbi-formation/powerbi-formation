@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "4e6750b0c696e5205e7a",
   "position": {
-    "x": 672.30698138666571,
-    "y": 610.981682408828,
+    "x": 672.82844321712116,
+    "y": 610.79461511908869,
     "z": 2,
-    "height": 467.88931812720654,
-    "width": 1246.9477458827009,
+    "height": 467.6396272005523,
+    "width": 1245.4483948912668,
     "tabOrder": 2
   },
   "visual": {
@@ -47,6 +47,20 @@
               },
               "queryRef": "Ventes.CA HT",
               "nativeQueryRef": "CA HT"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Produits"
+                    }
+                  },
+                  "Property": "Total Prix HT"
+                }
+              },
+              "queryRef": "Produits.Total Prix HT",
+              "nativeQueryRef": "Total Prix HT"
             }
           ]
         }
