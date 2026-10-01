@@ -1,0 +1,43 @@
+table Calendrier
+	lineageTag: cb285788-30f5-47fe-886b-f0891d8c682b
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 05e0cb08-52e3-4986-8d32-0c95e97488b7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année
+		formatString: 0
+		lineageTag: c76d3823-4433-4efe-b68b-19565261c557
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Année]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mois
+		lineageTag: f783ab83-3f62-48e0-8d68-a85b7c562e28
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mois]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendrier = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS (
+				    CALENDAR ( DATE ( 2024, 1, 1 ), DATE ( 2025, 12, 31 ) ),
+				    "Année", YEAR ( [Date] ),
+				    "Mois", FORMAT ( [Date], "yyyy-mm" )
+				)
+
+	annotation PBI_Id = 2e6374787b114d2eb9386cc7cc5c50e4
+
