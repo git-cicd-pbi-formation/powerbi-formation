@@ -23,6 +23,14 @@ table Ventes
 		formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
 		lineageTag: a6d6c1c1-09a3-4056-94bd-2b1a7107aa4f
 
+	measure 'Marge estimé' =
+			
+			[CA HT] * 0.35
+		formatString: #,0.###############\ "€";-#,0.###############\ "€";#,0.###############\ "€"
+		lineageTag: e6fbd5f3-2917-40f3-90e1-8b80971bf728
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
