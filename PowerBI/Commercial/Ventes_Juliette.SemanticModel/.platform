@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "Report",
-    "displayName": "Ventes_Valentine"
+    "type": "SemanticModel",
+    "displayName": "Ventes_Juliette"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "af90d5e8-caa9-446a-bb84-0653a0ee0b06"
+    "logicalId": "df4653f9-e94d-44c0-a2e1-c06eca44c341"
   }
 }
