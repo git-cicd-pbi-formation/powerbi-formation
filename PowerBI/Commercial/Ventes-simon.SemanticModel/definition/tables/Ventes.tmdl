@@ -36,6 +36,13 @@ table Ventes
 		formatString: 0.00\ %;-0.00\ %;0.00\ %
 		lineageTag: d851550c-2823-49b2-90fd-2a8a394789be
 
+	measure 'Marge estimée' =
+			
+			[CA HT] * 0.35
+		lineageTag: af19814f-9c61-4367-949d-2eb53287b8f9
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-FR"}
+
 	column NumCommande
 		dataType: string
 		lineageTag: dcd0f4a5-b2c1-4016-ad4b-2e8eadb59a82
